@@ -1,0 +1,78 @@
+import wollomon.*
+import torneo.*
+describe "check 1" {
+test "logica de tipos legendario con insignia" {
+    const drako = new Legendario(nivelExperiencia = 20, fuegoInterior = 25, insignia = insigniaRoja, ataques = [new Ataque(valorDaño = 10),new Ataque(valorDaño = 40)])
+    assert.equals(drako.dañoQueEfectua(), 75)
+    }
+
+test "Logica de tipos bicho y suma de ataques" {
+    const katerpi = new Bicho(nivelExperiencia = 15, ataques = [new Ataque(valorDaño = 5), new Ataque(valorDaño = 10), new Ataque(valorDaño = 2)])
+    assert.equals(17, katerpi.dañoQueEfectua())
+}
+}
+
+describe "mecanicas de batalla electrico vs electrico" {
+    const picachito = new Electrico(nivelExperiencia = 10, ataques = [new Ataque(valorDaño = 30), new Ataque(valorDaño = 15)])
+    const raichu = new Electrico(nivelExperiencia = 12)
+    method initialize(){
+        ambiente.cambiarHumedad(98)
+        picachito.atacar(raichu)
+    }
+  test "vida final de raichu" {
+    assert.equals(170, raichu.salud())
+  }
+  test "nivel de experiencia de raichu" {
+    assert.equals(11, raichu.nivelExperiencia())
+  }
+  test "nivel de experiencia de picachito" {
+    assert.equals(30, picachito.nivelExperiencia())
+  }
+}
+
+describe "mecanicas de batalla dragon vs bicho" {
+    const dragonait = new Dragon(nivelExperiencia = 20, fuegoInterior = 30, ataques = [new Ataque(valorDaño = 10), new Ataque(valorDaño = 25)])
+    const mantecaFly = new Bicho(nivelExperiencia = 5, salud = 100)
+    method initialize(){
+        dragonait.atacar(mantecaFly)
+    }
+  test "resultado de vida de mantecafly" {
+    assert.equals(45, mantecaFly.salud())
+  }
+  test "resultado de nivel de mantecafly" {
+    assert.equals(5, mantecaFly.nivelExperiencia())
+  }
+  test "resultado de nivel de dragonait" {
+    assert.equals(35, dragonait.nivelExperiencia())
+  }
+}
+
+describe "logica de torneo validacion de participantes" {
+    const picachito = new Electrico(nivelExperiencia = 10)
+    const wulbasur = new Bicho(nivelExperiencia = 10)
+    const escuartol = new Bicho(nivelExperiencia = 10)
+    const copaDeFuego = new Torneo(participantes = [picachito, wulbasur])
+    
+  test "intento de batalla" {
+    assert.throwsException({ copaDeFuego.batallaEntre(escuartol, picachito) })
+  }
+}
+
+describe "logica de torneo dar pocion" {
+    const picachito = new Electrico(nivelExperiencia = 10, salud = 40)
+    const wulbasur = new Bicho(nivelExperiencia = 10, salud = 70)
+    const charmanda = new Bicho(nivelExperiencia = 10, salud = 49)
+    const copaMaravilla = new Torneo(participantes = [picachito, wulbasur, charmanda])
+    method initialize(){
+        copaMaravilla.darPocion()
+    }
+  test "verificar vida de picachito" {
+    assert.equals(picachito.salud(), 60)
+  }
+  test "verificar vida de wulbasur" {
+    assert.equals(wulbasur.salud(), 70)
+  }
+  test "verificar vida de charmanda" {
+    assert.equals(charmanda.salud(), 69)
+  }
+}

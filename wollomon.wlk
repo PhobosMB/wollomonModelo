@@ -1,13 +1,17 @@
 class Wollomon{
-    var nivelExperiencia
-    var salud = 200
-    const ataques = []
+    var property nivelExperiencia
+    var property salud = 200
+    const property ataques = []
 
     method puedeAtacar() = salud > 10
 
     method aprenderAtaque(ataque){ ataques.add(ataque) } 
 
     method dañoQueEfectua()
+
+    method curar(cantidad){
+        salud += cantidad
+    }
 
     method atacar(unWollomon){
         if(self.puedeAtacar()){
@@ -31,7 +35,8 @@ class Bicho inherits Wollomon{
 class Dragon inherits Wollomon{
     const property fuegoInterior
     override method puedeAtacar() = super() && fuegoInterior > 20
-    override method dañoQueEfectua() = fuegoInterior + ataques.max({a => a.valorDaño()})
+    override method dañoQueEfectua() = fuegoInterior + ataques.max({a => a.valorDaño()}).valorDaño()
+    
     override method efectosDeAtacar(){
         nivelExperiencia += fuegoInterior*0.5
     }
@@ -92,4 +97,8 @@ class Ataque{
 
 object ambiente{
     var property humedad = 100
+
+    method cambiarHumedad(nueva){
+        humedad = nueva
+    }
 }
