@@ -54,7 +54,7 @@ describe "logica de torneo validacion de participantes" {
     const copaDeFuego = new Torneo(participantes = [picachito, wulbasur])
     
   test "intento de batalla" {
-    assert.throwsException({ copaDeFuego.batallaEntre(escuartol, picachito) })
+    assert.that(copaDeFuego.batallaEntre(picachito, escuartol))
   }
 }
 

@@ -6,8 +6,9 @@ class Torneo{
     method aprenderAtaqueMasivo(unAtaque){
         participantes.forEach({p => p.aprenderAtaque(unAtaque)})
     }
+    
     method batallaEntre(wollomonAtacante,wollomonDefensor){
-        if(participantes.contains(wollomonAtacante && wollomonDefensor)){
+        if(participantes.contains(wollomonAtacante)&&participantes.contains(wollomonDefensor)){
             wollomonAtacante.atacar(wollomonDefensor)
         }
         else{
@@ -19,12 +20,14 @@ class Torneo{
 
     method participanteConMayorPs() = participantes.max({p => p.salud()})
 
+
+
     method batallarAutomaticamente(){
         if(self.participanteDeMayorXp()!=self.participanteConMayorPs()){
             self.participanteDeMayorXp().atacar(self.participanteConMayorPs())
         }
         else{
-            self.participanteDeMayorXp().atacar(/**/)
+            self.participanteDeMayorXp().atacar(participantes.max({p => p.salud()}).get(1))
         }
     }
 
